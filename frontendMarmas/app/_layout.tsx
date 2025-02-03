@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   dropdownMenu: {
-    flex: 1,
     position: 'absolute',
     right: 16,
     top: 60, // Ajuste conforme altura do header
