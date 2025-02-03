@@ -1,10 +1,17 @@
 import { Stack } from 'expo-router';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable,Switch  } from 'react-native';
 import { useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function Layout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const handleSettingsPress = () => {
+    setIsMenuOpen(false); // Fecha o menu hamburger
+    setIsSettingsOpen(true); // Abre o popup
+  };
 
   return (
     <View style={styles.container}>
@@ -38,9 +45,38 @@ export default function Layout() {
           <Pressable style={styles.menuItem}>
             <Text style={styles.menuText}>Informações</Text>
           </Pressable>
-          <Pressable style={styles.menuItem}>
+          <Pressable 
+            style={styles.menuItem}
+            onPress={handleSettingsPress}
+          >
             <Text style={styles.menuText}>Configurações</Text>
           </Pressable>
+        </View>
+      )}
+
+      {/* POPUP DE CONFIGURAÇÕES */}
+      {isSettingsOpen && (
+        <View style={styles.settingsOverlay}>
+          <View style={styles.settingsPopup}>
+            <Text style={styles.popupTitle}>Configurações</Text>
+            
+            <View style={styles.settingItem}>
+              <Text style={styles.settingText}>Modo Escuro</Text>
+              <Switch
+                value={isDarkMode}
+                onValueChange={(value) => setIsDarkMode(value)}
+                trackColor={{ false: '#767577', true: '#81b0ff' }}
+                thumbColor={isDarkMode ? '#f5dd4b' : '#f4f3f4'}
+              />
+            </View>
+
+            <Pressable 
+              style={styles.closeButton}
+              onPress={() => setIsSettingsOpen(false)}
+            >
+              <Text style={styles.closeButtonText}>Fechar</Text>
+            </Pressable>
+          </View>
         </View>
       )}
 
@@ -104,5 +140,49 @@ const styles = StyleSheet.create({
     padding: 8,
     textAlign: 'center',
     backgroundColor: '#f0f0f0',
-  }
+  },
+  settingsOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 20,
+  },
+  settingsPopup: {
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 20,
+    width: '80%',
+  },
+  popupTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  settingItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 12,
+  },
+  settingText: {
+    fontSize: 16,
+    color: '#333',
+  },
+  closeButton: {
+    marginTop: 20,
+    backgroundColor: '#2A2A2A',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  closeButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
 });
