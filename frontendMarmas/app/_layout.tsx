@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Pressable,Switch  } from 'react-native';
 import { useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAppStore } from '../store/store';
+import Header from '../components/header/header'
+import DropdownMenu from '../components/DropdownMenu/dropdown'
 
 export default function Layout() {
   // Busca apenas os estados/ações necessários
@@ -19,40 +21,12 @@ export default function Layout() {
   return (
     <View style={styles.container}>
       {/* CABEÇALHO COM MENU */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Marmas</Text>
-        <Pressable 
-          onPress={toggleMenu}
-          style={styles.menuButton}
-        >
-          <MaterialCommunityIcons 
-            name="menu" 
-            size={28} 
-            color="white" 
-          />
-        </Pressable>
-      </View>
+
+      <Header/>
 
       {/* MENU DROPDOWN */}
-      {isMenuOpen && (
-        <View style={styles.dropdownMenu}>
-          <Pressable style={styles.menuItem}>
-            <Text style={styles.menuText}>Home</Text>
-          </Pressable>
-          <Pressable style={styles.menuItem}>
-            <Text style={styles.menuText}>Minha conta</Text>
-          </Pressable>
-          <Pressable style={styles.menuItem}>
-            <Text style={styles.menuText}>Meus pedidos</Text>
-          </Pressable>
-          <Pressable style={styles.menuItem}>
-            <Text style={styles.menuText}>Informações</Text>
-          </Pressable>
-          <Pressable onPress={openSettings}>
-            <Text>Configurações</Text>
-          </Pressable>
-        </View>
-      )}
+
+      <DropdownMenu/>
 
       {/* POPUP DE CONFIGURAÇÕES */}
       {isSettingsOpen && (
