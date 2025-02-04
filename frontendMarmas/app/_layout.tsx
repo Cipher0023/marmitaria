@@ -2,16 +2,19 @@ import { Stack } from 'expo-router';
 import { View, Text, StyleSheet, Pressable,Switch  } from 'react-native';
 import { useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useAppStore } from '../store/store';
 
 export default function Layout() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  const handleSettingsPress = () => {
-    setIsMenuOpen(false); // Fecha o menu hamburger
-    setIsSettingsOpen(true); // Abre o popup
-  };
+  // Busca apenas os estados/ações necessários
+  const {
+    isMenuOpen,
+    isSettingsOpen,
+    isDarkMode,
+    toggleMenu,
+    openSettings,
+    closeSettings,
+    toggleDarkMode
+  } = useAppStore();
 
   return (
     <View style={styles.container}>
@@ -19,7 +22,7 @@ export default function Layout() {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Marmas</Text>
         <Pressable 
-          onPress={() => setIsMenuOpen(!isMenuOpen)}
+          onPress={toggleMenu}
           style={styles.menuButton}
         >
           <MaterialCommunityIcons 
@@ -45,11 +48,8 @@ export default function Layout() {
           <Pressable style={styles.menuItem}>
             <Text style={styles.menuText}>Informações</Text>
           </Pressable>
-          <Pressable 
-            style={styles.menuItem}
-            onPress={handleSettingsPress}
-          >
-            <Text style={styles.menuText}>Configurações</Text>
+          <Pressable onPress={openSettings}>
+            <Text>Configurações</Text>
           </Pressable>
         </View>
       )}
@@ -64,7 +64,7 @@ export default function Layout() {
               <Text style={styles.settingText}>Modo Escuro</Text>
               <Switch
                 value={isDarkMode}
-                onValueChange={(value) => setIsDarkMode(value)}
+                onValueChange={toggleDarkMode}
                 trackColor={{ false: '#767577', true: '#81b0ff' }}
                 thumbColor={isDarkMode ? '#f5dd4b' : '#f4f3f4'}
               />
@@ -72,7 +72,7 @@ export default function Layout() {
 
             <Pressable 
               style={styles.closeButton}
-              onPress={() => setIsSettingsOpen(false)}
+              onPress={closeSettings}
             >
               <Text style={styles.closeButtonText}>Fechar</Text>
             </Pressable>
