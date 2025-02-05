@@ -1,23 +1,60 @@
 import { Text, View, Image, StyleSheet } from "react-native";
+import ProductCard from '../components/productBox/productBox';
+import { useAppStore } from '../store/store'; // Adicione esta linha
+import { Colors } from '../constants/colors'; // Adicione esta linha
 
 export default function Index() {
+  const { isDarkMode } = useAppStore(); // Obtenha o estado do tema
+  const theme = isDarkMode ? Colors.dark : Colors.light;
+
+  // Estilos dinâmicos
+  const dynamicStyles = StyleSheet.create({
+    container: {
+      flex: 1,
+      position: 'relative',
+      backgroundColor: theme.background,
+    },
+    overlay: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: theme.overlay,
+    },
+    text: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: theme.textPrimary,
+      textShadowColor: theme.shadow,
+      textShadowOffset: { width: 1, height: 1 },
+      textShadowRadius: 5,
+      marginTop: 40,
+      alignSelf: 'center'
+    }
+  });
+
   return (
-    <View style={styles.container}>
+    <View style={dynamicStyles.container}>
       <Image
-        source={require('../assets/images/restaurant.png')} // Caminho correto da sua imagem
+        source={require('../assets/images/restaurant.png')}
         style={styles.backgroundImage}
         resizeMode="cover"
       />
-      <Text style={styles.text}>Bem-vindo à Marmas!</Text>
+      
+      {/* Overlay para contraste */}
+      <View style={dynamicStyles.overlay} />
+
+      <Text style={dynamicStyles.text}>Bem-vindo à Marmas!</Text>
+
+      <ProductCard
+        title="Marmita Básica"
+        price={49.90}
+        imageUrl="https://exemplo.com/camiseta.jpg"
+        onPress={() => console.log('Produto clicado')}
+      />
     </View>
   );
 }
 
+// Estilos estáticos (não dependem do tema)
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: 'relative',
-  },
   backgroundImage: {
     flex: 1,
     width: '100%',
@@ -26,14 +63,4 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
   },
-  text: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white',
-    textShadowColor: 'rgba(0,0,0,0.5)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 5,
-    marginTop: 40, // Ajuste conforme necessário
-    alignSelf: 'center'
-  }
 });

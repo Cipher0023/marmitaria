@@ -6,7 +6,8 @@ export const Colors = {
       textPrimary: 'rgb(0, 0, 0)',
       textSecondary: '#333333',
       overlay: 'rgba(255,255,255,0.3)',
-      icons: 'rgb(0, 0, 0)'
+      icons: 'rgb(0, 0, 0)',
+      shadow: 'rgb(0, 0, 0)',
     },
     dark: {
       background: 'rgb(65, 65, 65)',
@@ -15,7 +16,8 @@ export const Colors = {
       textPrimary: 'rgb(255, 255, 255)',
       textSecondary: '#E0E0E0',
       overlay: 'rgba(0,0,0,0.6)',
-      icons: 'rgb(255, 255, 255)'
+      icons: 'rgb(255, 255, 255)',
+      shadow: 'rgb(122, 122, 122)',
     }
   };
   
