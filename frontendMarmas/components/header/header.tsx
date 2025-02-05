@@ -18,7 +18,7 @@ export default function Header() {
         <MaterialCommunityIcons 
           name="menu" 
           size={28} 
-          color={theme.textPrimary} 
+          color={theme.icons} 
         />
       </Pressable>
     </View>
